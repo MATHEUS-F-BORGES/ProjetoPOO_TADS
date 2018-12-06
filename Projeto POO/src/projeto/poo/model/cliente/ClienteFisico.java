@@ -13,8 +13,11 @@ import java.util.Date;
  * @author victor.gserafim
  */
 public class ClienteFisico extends Cliente{
+
+   
     
     private String cpf;
+  
 
     public ClienteFisico(String cpf, String nome, String tipo, Date data,
             String logradouro, int numero, String bairro, String cidade, 

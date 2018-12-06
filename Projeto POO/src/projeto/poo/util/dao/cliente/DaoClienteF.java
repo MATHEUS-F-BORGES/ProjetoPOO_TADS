@@ -193,9 +193,18 @@ public class DaoClienteF implements Daos<ClienteFisico> {
             preparedStatement.setString(1, cliente.getNome());
             preparedStatement.setString(2, cliente.getTipo());
             preparedStatement.setString(3, cliente.getCpf());
-            ;
+            preparedStatement.setString(4, Servico.convesorDataString(cliente.getData()));
+            preparedStatement.setString(5, cliente.getLogradouro());
+            preparedStatement.setInt(6, cliente.getNumero());
+            preparedStatement.setString(7, cliente.getBairro());
+            preparedStatement.setString(8, cliente.getCidade());
+            preparedStatement.setString(9, cliente.getEstado());
+            preparedStatement.setString(10, cliente.getTelefone());
+            preparedStatement.setString(11, cliente.getEmail());
+            preparedStatement.setInt(12, cliente.getId());
 
             preparedStatement.execute();
+            Servico.AltSucesso();
         } catch (SQLException ex) {
             Logger.getLogger(DaoClienteF.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

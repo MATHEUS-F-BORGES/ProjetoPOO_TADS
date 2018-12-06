@@ -96,7 +96,7 @@ public class DaoClienteJ implements Daos<ClienteJuridico> {
                 cliente.setEmail(result.getString("EMAIL"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DaoClienteF.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DaoClienteJ.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (result != null && !result.isClosed()) {
@@ -109,7 +109,7 @@ public class DaoClienteJ implements Daos<ClienteJuridico> {
                     connection.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(DaoClienteF.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DaoClienteJ.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return cliente;
@@ -166,9 +166,49 @@ public class DaoClienteJ implements Daos<ClienteJuridico> {
     }
 
     @Override
-    public void atualizar(ClienteJuridico objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void atualizar(ClienteJuridico cliente) {
+      
+      
+
+        String sql = "UPDATE ClienteFisico SET NOMEFANT=?, TIPOCLI=?, CNPJ=?,"
+                + ", LOGRADOURO=?, NUMERO=?, BAIRRO=?, CIDADE=?"
+                + ", ESTADO=?, TELEFONE=?, EMAIL=? WHERE (ID=?)";
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            conn = ConnectionUtils.getConnection();
+            preparedStatement = conn.prepareStatement(sql);
+            
+            preparedStatement.setString(1, cliente.getNome());
+            preparedStatement.setString(2, cliente.getTipo());
+            preparedStatement.setString(3, cliente.getCnpj());
+            preparedStatement.setString(4, cliente.getLogradouro());
+            preparedStatement.setInt(5, cliente.getNumero());
+            preparedStatement.setString(6, cliente.getBairro());
+            preparedStatement.setString(7, cliente.getCidade());
+            preparedStatement.setString(8, cliente.getEstado());
+            preparedStatement.setString(9, cliente.getTelefone());
+            preparedStatement.setString(10, cliente.getEmail());            
+            preparedStatement.setInt(11, cliente.getId());
+
+            preparedStatement.execute();
+            Servico.AltSucesso();
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoClienteJ.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DaoClienteJ.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
+    
 
     @Override
     public void excluir(int id) {

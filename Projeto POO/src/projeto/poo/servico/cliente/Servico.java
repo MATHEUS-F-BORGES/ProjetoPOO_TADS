@@ -43,6 +43,14 @@ public class Servico {
                 "Cadastro de Cliente",
                 JOptionPane.INFORMATION_MESSAGE);
     }
+    public static void AltSucesso(){
+    
+        
+        JOptionPane.showMessageDialog(null,
+                "Cliente Atualizado",
+                "Alteração de Cliente",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
     public static void ClienteNaoCad (){
     
         

@@ -116,6 +116,7 @@ public class TelaInicial extends javax.swing.JFrame {
         labelLogradouro4 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         BotaoSalvarCadastroF = new javax.swing.JButton();
+        ID = new javax.swing.JLabel();
         painelConsultarCliente = new javax.swing.JPanel();
         labelcliente = new javax.swing.JLabel();
         txtConsultaCli = new javax.swing.JTextField();
@@ -738,7 +739,10 @@ public class TelaInicial extends javax.swing.JFrame {
                                                 .addGroup(painelCadastrarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(txtCpfCnpj)
                                                     .addComponent(comboBoxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
-                        .addGap(28, 28, 28)))
+                        .addGap(28, 28, 28))
+                    .addGroup(painelCadastrarClienteLayout.createSequentialGroup()
+                        .addComponent(ID)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         painelCadastrarClienteLayout.setVerticalGroup(
@@ -775,7 +779,9 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(painelCadastrarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelLogradouro4)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(ID)
+                .addGap(34, 34, 34)
                 .addComponent(BotaoSalvarCadastroF)
                 .addContainerGap())
         );
@@ -1469,7 +1475,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
             } else if (labelCpfOUCnpj.getText().equalsIgnoreCase("CNPJ")) {
 
-                cliente = new ClienteJuridico(tel, nome, tel, logradouro, numero, bairro, cidade, estado, tel, email);
+                cliente = new ClienteJuridico(CPFouCNPJ, nome, tel, logradouro, numero, bairro, cidade, estado, tel, email);
                 DaoClienteJ juridico = new DaoClienteJ();
                 juridico.inserir((ClienteJuridico) cliente);
 
@@ -1479,7 +1485,54 @@ public class TelaInicial extends javax.swing.JFrame {
                 Servico.ClienteNaoCad();
             }
             
-        }
+        }else {
+            String ide = ID.getText();
+            int id = Integer.parseInt(ID.getText());    
+            String nome = txtNome.getText();
+            String textodata = txtData.getText();
+            String CPFouCNPJ = txtCpfCnpj.getText();
+            String logradouro = txtLogradouro.getText();
+            int numero = Integer.parseInt(txtNumero.getText());
+            String cidade = txtCidade.getText();
+            String estado = (String) comboBoxEstados.getSelectedItem();
+            String bairro = txtBairro.getText();
+            String tel = txtTel.getText();
+            String email = txtEmail.getText();
+
+            if (labelCpfOUCnpj.getText().equalsIgnoreCase("CPF")) {
+
+                Date data = Servico.convesorData(textodata);
+
+                cliente = new ClienteFisico(CPFouCNPJ, nome, tel, data, logradouro, numero, bairro, cidade, estado, tel, email);
+                cliente.setId(id);
+                DaoClienteF daof = new DaoClienteF();
+                
+                daof.atualizar((ClienteFisico) cliente);
+               
+
+                CardLayout card = (CardLayout) mainPanel.getLayout();
+                card.show(mainPanel, "empty");
+
+            } else if (labelCpfOUCnpj.getText().equalsIgnoreCase("CNPJ")) {
+
+                cliente = new ClienteJuridico(CPFouCNPJ, nome, tel, logradouro, numero, bairro, cidade, estado, ide, email);
+                cliente.setId(id);
+                DaoClienteJ daoj = new DaoClienteJ();
+                
+                daoj.atualizar((ClienteJuridico) cliente);
+              
+
+                CardLayout card = (CardLayout) mainPanel.getLayout();
+                card.show(mainPanel, "empty");
+                
+                
+            }
+            
+                
+                
+            
+            
+            }
 
         } catch (Exception ex) {
 
@@ -1505,6 +1558,8 @@ public class TelaInicial extends javax.swing.JFrame {
             if (resultF != null) {
                 
                 labelNomeCli.setText(resultF.getNome());
+                int id = resultF.getId();
+                ID.setText(Integer.toString(id));
 
                 CardLayout card = (CardLayout) mainPanel.getLayout();
                 card.show(mainPanel, "painelOpcaoConsultar");
@@ -1558,7 +1613,8 @@ public class TelaInicial extends javax.swing.JFrame {
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         CardLayout card = (CardLayout) mainPanel.getLayout();
         card.show(mainPanel, "painelCadastrarCliente");
-        
+        ID.setVisible(false);
+        inserir = false;
         
 
 
@@ -1690,6 +1746,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton Altbtn;
     private javax.swing.JButton BotaoSalvarCadastroF;
     private javax.swing.JButton Finalizar;
+    private javax.swing.JLabel ID;
     private javax.swing.JMenuItem MenuAbrirConta;
     private javax.swing.JMenuItem MenuAtualizar;
     private javax.swing.JMenuBar MenuBar;

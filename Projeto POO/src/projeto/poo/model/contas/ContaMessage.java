@@ -62,7 +62,7 @@ public class ContaMessage {
 
     public static void contAtualizada() {
         JOptionPane.showMessageDialog(null,
-                "Conta aberta!",
+                "Conta Atualizada!",
                 "Abertura de conta",
                 JOptionPane.INFORMATION_MESSAGE);
     }

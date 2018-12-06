@@ -1,7 +1,5 @@
 package projeto.poo.model.cliente;
 
-import java.util.Date;
-
 
 
 /**
@@ -18,10 +16,7 @@ public class ClienteJuridico extends Cliente {
         this.cnpj = cnpj;
     }
 
-   
-    
 
-   
     
 
     public ClienteJuridico() {
