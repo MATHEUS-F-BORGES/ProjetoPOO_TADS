@@ -8,6 +8,7 @@ package projeto.poo.servico.conta;
 import javax.swing.JOptionPane;
 import projeto.poo.model.contas.Contas;
 import projeto.poo.util.dao.conta.DaoConta;
+import projeto.poo.validacao.ValidarConta;
 
 /**
  *
@@ -17,7 +18,7 @@ public class ContaService {
 
     public static String cadastrarConta(Contas conta) {
 
-        String resposta = null;
+        String resposta = ValidarConta.validar(conta);
 
         if (resposta == null) {
 
@@ -39,7 +40,7 @@ public class ContaService {
 
     public static String atualizarProduto(Contas conta) {
 
-        String resposta = null;
+        String resposta = ValidarConta.validar(conta);
 
         resposta = null;
 

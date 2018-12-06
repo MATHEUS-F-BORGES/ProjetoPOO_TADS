@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import projeto.poo.interfaces.Daos;
 import projeto.poo.model.cliente.ClienteFisico;
 import projeto.poo.servico.cliente.Servico;
@@ -32,7 +33,7 @@ public class DaoClienteF implements Daos<ClienteFisico> {
             preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setString(1, cliente.getNome());
-            preparedStatement.setString(2, "Pessoa Fisica");
+            preparedStatement.setString(2, "Cliente Fisico");
             preparedStatement.setString(3, cliente.getCpf());
             preparedStatement.setString(4, Servico.convesorDataString(cliente.getData()));
             preparedStatement.setString(5, cliente.getLogradouro());
@@ -224,8 +225,35 @@ public class DaoClienteF implements Daos<ClienteFisico> {
 
     @Override
     public void excluir(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "DELETE FROM ClienteFisico WHERE ID=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = ConnectionUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.execute();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,
+                                            "Cliente Vinculado a uma conta  \n"
+                                                    + "Favor fechar a(s) conta(s) do cliente",
+                                            "Erro de exclusão",
+                                            JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DaoClienteF.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
+
 
 
     @Override

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import projeto.poo.interfaces.Daos;
 import projeto.poo.model.cliente.ClienteJuridico;
 import projeto.poo.servico.cliente.Servico;
@@ -33,7 +34,7 @@ public class DaoClienteJ implements Daos<ClienteJuridico> {
             preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setString(1, cliente.getNome());
-            preparedStatement.setString(2, "Pessoa Juridica");
+            preparedStatement.setString(2, "Cliente Juridico");
             preparedStatement.setString(3, cliente.getCnpj());
             preparedStatement.setString(4, cliente.getLogradouro());
             preparedStatement.setInt(5, cliente.getNumero());
@@ -170,7 +171,7 @@ public class DaoClienteJ implements Daos<ClienteJuridico> {
       
       
 
-        String sql = "UPDATE ClienteFisico SET NOMEFANT=?, TIPOCLI=?, CNPJ=?,"
+        String sql = "UPDATE ClienteJuridico SET NOMEFANT=?, TIPOCLI=?, CNPJ=?,"
                 + ", LOGRADOURO=?, NUMERO=?, BAIRRO=?, CIDADE=?"
                 + ", ESTADO=?, TELEFONE=?, EMAIL=? WHERE (ID=?)";
         Connection conn = null;
@@ -212,7 +213,33 @@ public class DaoClienteJ implements Daos<ClienteJuridico> {
 
     @Override
     public void excluir(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "DELETE FROM ClienteJuridico WHERE ID=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = ConnectionUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.execute();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,
+                                            "Cliente Vinculado a uma conta.  \n"
+                                                    + "Favor fechar a(s) conta(s) do cliente!",
+                                            "Erro de exclusão",
+                                            JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DaoClienteJ.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override

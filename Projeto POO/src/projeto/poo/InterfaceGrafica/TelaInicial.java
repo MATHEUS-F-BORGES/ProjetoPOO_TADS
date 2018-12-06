@@ -20,6 +20,7 @@ import projeto.poo.model.contas.ContaPoupança;
 import projeto.poo.model.contas.Contas;
 import projeto.poo.model.contas.ContaMessage;
 import projeto.poo.servico.cliente.Servico;
+import projeto.poo.servico.conta.ContaService;
 import projeto.poo.util.dao.cliente.DaoClienteF;
 import projeto.poo.util.dao.cliente.DaoClienteJ;
 import projeto.poo.util.dao.conta.DaoConta;
@@ -34,7 +35,8 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form TelaInicial
      */
-    boolean inserir = true;
+    boolean inserirConta = true;
+    boolean inserirCliente = true;
     Cliente cliente = null;
 
     public TelaInicial() {
@@ -406,7 +408,7 @@ public class TelaInicial extends javax.swing.JFrame {
             infoContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoContaLayout.createSequentialGroup()
                 .addGap(178, 178, 178)
-                .addComponent(Finalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Finalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                 .addGap(162, 162, 162))
             .addGroup(infoContaLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
@@ -448,7 +450,7 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(infoContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tipLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(infoContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NomeContLb)
                     .addComponent(NomeContxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -456,11 +458,11 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(infoContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NumContLb)
                     .addComponent(NumContxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(infoContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(infoCorrente)
                     .addComponent(infoPoup))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(checkTermos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Finalizar))
@@ -474,12 +476,15 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(clienteLb, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCliente)
+                .addComponent(txtCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buscarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
             .addGroup(painelAbrirContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(infoConta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(painelAbrirContaLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(infoConta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         painelAbrirContaLayout.setVerticalGroup(
             painelAbrirContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,9 +494,9 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(clienteLb)
                     .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buscarbtn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(275, Short.MAX_VALUE))
             .addGroup(painelAbrirContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(painelAbrirContaLayout.createSequentialGroup()
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelAbrirContaLayout.createSequentialGroup()
                     .addGap(45, 45, 45)
                     .addComponent(infoConta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
@@ -689,7 +694,9 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(painelCadastrarClienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelCadastrarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BotaoSalvarCadastroF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastrarClienteLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(BotaoSalvarCadastroF, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelCadastrarClienteLayout.createSequentialGroup()
                         .addGroup(painelCadastrarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelCadastrarClienteLayout.createSequentialGroup()
@@ -780,8 +787,8 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(labelLogradouro4)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(ID)
-                .addGap(34, 34, 34)
+                .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BotaoSalvarCadastroF)
                 .addContainerGap())
         );
@@ -816,20 +823,20 @@ public class TelaInicial extends javax.swing.JFrame {
         painelOpcaoConsultarLayout.setHorizontalGroup(
             painelOpcaoConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelOpcaoConsultarLayout.createSequentialGroup()
-                .addContainerGap(170, Short.MAX_VALUE)
-                .addGroup(painelOpcaoConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(botaoAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                    .addComponent(botaoExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(156, 156, 156))
+                .addGap(36, 36, 36)
+                .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
         painelOpcaoConsultarLayout.setVerticalGroup(
             painelOpcaoConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelOpcaoConsultarLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addGroup(painelOpcaoConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoAtualizar)
+                    .addComponent(botaoExcluir))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         labelNomePes.setText("Nome: ");
@@ -847,7 +854,7 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(painelConsultarClienteLayout.createSequentialGroup()
                 .addComponent(labelNomePes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNomeCli)
+                .addComponent(labelNomeCli, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(painelConsultarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(painelOpcaoConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -863,11 +870,11 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(painelConsultarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNomePes)
-                    .addComponent(labelNomeCli))
-                .addContainerGap(218, Short.MAX_VALUE))
+                    .addComponent(labelNomeCli, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(210, Short.MAX_VALUE))
             .addGroup(painelConsultarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelConsultarClienteLayout.createSequentialGroup()
-                    .addGap(0, 95, Short.MAX_VALUE)
+                    .addGap(0, 134, Short.MAX_VALUE)
                     .addComponent(painelOpcaoConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -1045,7 +1052,7 @@ public class TelaInicial extends javax.swing.JFrame {
         NomeContxt.setText(conta.getNomeCont());
         NumContxt.setText(Integer.toString(conta.getNumConta()));
 
-        inserir = false;
+        inserirConta = false;
     }//GEN-LAST:event_AltbtnActionPerformed
 
     private void MenuInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuInicioActionPerformed
@@ -1258,7 +1265,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_infoPoupActionPerformed
 
     private void FinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizarActionPerformed
-        if (inserir) {
+        if (inserirConta) {
             DaoClienteF daoF = new DaoClienteF();
             DaoClienteJ daoJ = new DaoClienteJ();
             DaoConta daoConta = new DaoConta();
@@ -1275,6 +1282,9 @@ public class TelaInicial extends javax.swing.JFrame {
                         daoConta.inserir(conta);
                         ContaMessage.contAberta();
 
+                        CardLayout card = (CardLayout) mainPanel.getLayout();
+                        card.show(mainPanel, "empty");
+
                     } else {
                         String nome = NomeContxt.getText();
                         int num = Integer.parseInt(NumContxt.getText());
@@ -1282,6 +1292,9 @@ public class TelaInicial extends javax.swing.JFrame {
 
                         daoConta.inserir(conta);
                         ContaMessage.contAberta();
+
+                        CardLayout card = (CardLayout) mainPanel.getLayout();
+                        card.show(mainPanel, "empty");
                     }
                 } else if (resultJ != null) {
                     if ("Conta Corrente".equals(tipo)) {
@@ -1291,6 +1304,9 @@ public class TelaInicial extends javax.swing.JFrame {
 
                         daoConta.inserir(conta);
                         ContaMessage.contAberta();
+
+                        CardLayout card = (CardLayout) mainPanel.getLayout();
+                        card.show(mainPanel, "empty");
                     } else {
                         String nome = NomeContxt.getText();
                         int num = Integer.parseInt(NumContxt.getText());
@@ -1298,13 +1314,15 @@ public class TelaInicial extends javax.swing.JFrame {
 
                         daoConta.inserir(conta);
                         ContaMessage.contAberta();
+
+                        CardLayout card = (CardLayout) mainPanel.getLayout();
+                        card.show(mainPanel, "empty");
                     }
                 }
             } else {
                 ContaMessage.termos();
             }
-            CardLayout card = (CardLayout) mainPanel.getLayout();
-            card.show(mainPanel, "empty");
+
         } else {
             atualizar();
         }
@@ -1423,17 +1441,17 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailKeyTyped
 
     private void pessoaFiscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pessoaFiscaActionPerformed
-        
-        inserir = true;
+
+        inserirCliente = true;
         labelCpfOUCnpj.setText("CPF");
         CardLayout card = (CardLayout) mainPanel.getLayout();
         card.show(mainPanel, "painelCadastrarCliente");
-       
+
     }//GEN-LAST:event_pessoaFiscaActionPerformed
 
     private void pessoaJuridicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pessoaJuridicaActionPerformed
 
-        inserir = true;
+        inserirCliente = true;
         labelCpfOUCnpj.setText("CNPJ");
         Date dataHoje = new Date();
         String data = Servico.convesorDataString(dataHoje);
@@ -1449,89 +1467,81 @@ public class TelaInicial extends javax.swing.JFrame {
 
         try {
 
-            if(inserir){
-            
-            String nome = txtNome.getText();
-            String textodata = txtData.getText();
-            String CPFouCNPJ = txtCpfCnpj.getText();
-            String logradouro = txtLogradouro.getText();
-            int numero = Integer.parseInt(txtNumero.getText());
-            String cidade = txtCidade.getText();
-            String estado = (String) comboBoxEstados.getSelectedItem();
-            String bairro = txtBairro.getText();
-            String tel = txtTel.getText();
-            String email = txtEmail.getText();
+            if (inserirCliente) {
 
-            if (labelCpfOUCnpj.getText().equalsIgnoreCase("CPF")) {
+                String nome = txtNome.getText();
+                String textodata = txtData.getText();
+                String CPFouCNPJ = txtCpfCnpj.getText();
+                String logradouro = txtLogradouro.getText();
+                int numero = Integer.parseInt(txtNumero.getText());
+                String cidade = txtCidade.getText();
+                String estado = (String) comboBoxEstados.getSelectedItem();
+                String bairro = txtBairro.getText();
+                String tel = txtTel.getText();
+                String email = txtEmail.getText();
 
-                Date data = Servico.convesorData(textodata);
+                if (labelCpfOUCnpj.getText().equalsIgnoreCase("CPF")) {
 
-                cliente = new ClienteFisico(CPFouCNPJ, nome, tel, data, logradouro, numero, bairro, cidade, estado, tel, email);
-                DaoClienteF fisico = new DaoClienteF();
-                fisico.inserir((ClienteFisico) cliente);
+                    Date data = Servico.convesorData(textodata);
 
-                CardLayout card = (CardLayout) mainPanel.getLayout();
-                card.show(mainPanel, "empty");
+                    cliente = new ClienteFisico(CPFouCNPJ, nome, tel, data, logradouro, numero, bairro, cidade, estado, tel, email);
+                    DaoClienteF fisico = new DaoClienteF();
+                    fisico.inserir((ClienteFisico) cliente);
 
-            } else if (labelCpfOUCnpj.getText().equalsIgnoreCase("CNPJ")) {
+                    CardLayout card = (CardLayout) mainPanel.getLayout();
+                    card.show(mainPanel, "empty");
 
-                cliente = new ClienteJuridico(CPFouCNPJ, nome, tel, logradouro, numero, bairro, cidade, estado, tel, email);
-                DaoClienteJ juridico = new DaoClienteJ();
-                juridico.inserir((ClienteJuridico) cliente);
+                } else if (labelCpfOUCnpj.getText().equalsIgnoreCase("CNPJ")) {
 
-                CardLayout card = (CardLayout) mainPanel.getLayout();
-                card.show(mainPanel, "empty");
+                    cliente = new ClienteJuridico(CPFouCNPJ, nome, tel, logradouro, numero, bairro, cidade, estado, tel, email);
+                    DaoClienteJ juridico = new DaoClienteJ();
+                    juridico.inserir((ClienteJuridico) cliente);
+
+                    CardLayout card = (CardLayout) mainPanel.getLayout();
+                    card.show(mainPanel, "empty");
+                } else {
+                    Servico.ClienteNaoCad();
+                }
+
             } else {
-                Servico.ClienteNaoCad();
-            }
-            
-        }else {
-            String ide = ID.getText();
-            int id = Integer.parseInt(ID.getText());    
-            String nome = txtNome.getText();
-            String textodata = txtData.getText();
-            String CPFouCNPJ = txtCpfCnpj.getText();
-            String logradouro = txtLogradouro.getText();
-            int numero = Integer.parseInt(txtNumero.getText());
-            String cidade = txtCidade.getText();
-            String estado = (String) comboBoxEstados.getSelectedItem();
-            String bairro = txtBairro.getText();
-            String tel = txtTel.getText();
-            String email = txtEmail.getText();
+                int id = Integer.parseInt(ID.getText());
+                String nome = txtNome.getText();
+                String textodata = txtData.getText();
+                String CPFouCNPJ = txtCpfCnpj.getText();
+                String logradouro = txtLogradouro.getText();
+                int numero = Integer.parseInt(txtNumero.getText());
+                String cidade = txtCidade.getText();
+                String estado = (String) comboBoxEstados.getSelectedItem();
+                String bairro = txtBairro.getText();
+                String tel = txtTel.getText();
+                String email = txtEmail.getText();
 
-            if (labelCpfOUCnpj.getText().equalsIgnoreCase("CPF")) {
+                if (labelCpfOUCnpj.getText().equalsIgnoreCase("CPF")) {
 
-                Date data = Servico.convesorData(textodata);
+                    Date data = Servico.convesorData(textodata);
 
-                cliente = new ClienteFisico(CPFouCNPJ, nome, tel, data, logradouro, numero, bairro, cidade, estado, tel, email);
-                cliente.setId(id);
-                DaoClienteF daof = new DaoClienteF();
-                
-                daof.atualizar((ClienteFisico) cliente);
-               
+                    cliente = new ClienteFisico(CPFouCNPJ, nome, tel, data, logradouro, numero, bairro, cidade, estado, tel, email);
+                    cliente.setId(id);
+                    DaoClienteF daof = new DaoClienteF();
 
-                CardLayout card = (CardLayout) mainPanel.getLayout();
-                card.show(mainPanel, "empty");
+                    daof.atualizar((ClienteFisico) cliente);
 
-            } else if (labelCpfOUCnpj.getText().equalsIgnoreCase("CNPJ")) {
+                    CardLayout card = (CardLayout) mainPanel.getLayout();
+                    card.show(mainPanel, "empty");
 
-                cliente = new ClienteJuridico(CPFouCNPJ, nome, tel, logradouro, numero, bairro, cidade, estado, ide, email);
-                cliente.setId(id);
-                DaoClienteJ daoj = new DaoClienteJ();
-                
-                daoj.atualizar((ClienteJuridico) cliente);
-              
+                } else if (labelCpfOUCnpj.getText().equalsIgnoreCase("CNPJ")) {
+                    
+                    cliente = new ClienteJuridico(CPFouCNPJ, nome, tel, logradouro, numero, bairro, cidade, estado, tel, email);
+                    cliente.setId(id);
+                    DaoClienteJ daoj = new DaoClienteJ();
 
-                CardLayout card = (CardLayout) mainPanel.getLayout();
-                card.show(mainPanel, "empty");
-                
-                
-            }
-            
-                
-                
-            
-            
+                    daoj.atualizar((ClienteJuridico) cliente);
+
+                    CardLayout card = (CardLayout) mainPanel.getLayout();
+                    card.show(mainPanel, "empty");
+
+                }
+
             }
 
         } catch (Exception ex) {
@@ -1547,7 +1557,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSairActionPerformed
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-        
+
         DaoClienteF daoF = new DaoClienteF();
         DaoClienteJ daoJ = new DaoClienteJ();
 
@@ -1556,7 +1566,7 @@ public class TelaInicial extends javax.swing.JFrame {
             ClienteJuridico resultJ = daoJ.procurar(txtConsultaCli.getText());
 
             if (resultF != null) {
-                
+
                 labelNomeCli.setText(resultF.getNome());
                 int id = resultF.getId();
                 ID.setText(Integer.toString(id));
@@ -1564,39 +1574,40 @@ public class TelaInicial extends javax.swing.JFrame {
                 CardLayout card = (CardLayout) mainPanel.getLayout();
                 card.show(mainPanel, "painelOpcaoConsultar");
                 painelOpcaoConsultar.setVisible(true);
-                
-            labelCpfOUCnpj.setText("CPF");    
-            txtNome.setText(resultF.getNome());
-            txtData.setText(Servico.convesorDataString(resultF.getData()));
-            txtCpfCnpj.setText(resultF.getCpf());
-            txtLogradouro.setText(resultF.getLogradouro());
-            txtNumero.setText(Integer.toString(resultF.getNumero()));
-            txtCidade.setText(resultF.getCidade());
-            txtBairro.setText(resultF.getBairro());
-            txtTel.setText(resultF.getTelefone());
-            txtEmail.setText(resultF.getEmail());
 
+                labelCpfOUCnpj.setText("CPF");
+                txtNome.setText(resultF.getNome());
+                txtData.setText(Servico.convesorDataString(resultF.getData()));
+                txtCpfCnpj.setText(resultF.getCpf());
+                txtLogradouro.setText(resultF.getLogradouro());
+                txtNumero.setText(Integer.toString(resultF.getNumero()));
+                txtCidade.setText(resultF.getCidade());
+                txtBairro.setText(resultF.getBairro());
+                txtTel.setText(resultF.getTelefone());
+                txtEmail.setText(resultF.getEmail());
 
             } else if (resultJ != null) {
-                
+
                 labelNomeCli.setText(resultJ.getNome());
+                int id = resultJ.getId();
+                ID.setText(Integer.toString(id));
 
                 CardLayout card = (CardLayout) mainPanel.getLayout();
                 card.show(mainPanel, "painelOpcaoConsultar");
                 painelOpcaoConsultar.setVisible(true);
-                
+
                 labelData.setVisible(false);
                 txtData.setVisible(false);
-                
-            labelCpfOUCnpj.setText("CNPJ");
-            txtNome.setText(resultJ.getNome());
-            txtCpfCnpj.setText(resultJ.getCnpj());
-            txtLogradouro.setText(resultJ.getLogradouro());
-            txtNumero.setText(Integer.toString(resultJ.getNumero()));
-            txtCidade.setText(resultJ.getCidade());
-            txtBairro.setText(resultJ.getBairro());
-            txtTel.setText(resultJ.getTelefone());
-            txtEmail.setText(resultJ.getEmail());
+
+                labelCpfOUCnpj.setText("CNPJ");
+                txtNome.setText(resultJ.getNome());
+                txtCpfCnpj.setText(resultJ.getCnpj());
+                txtLogradouro.setText(resultJ.getLogradouro());
+                txtNumero.setText(Integer.toString(resultJ.getNumero()));
+                txtCidade.setText(resultJ.getCidade());
+                txtBairro.setText(resultJ.getBairro());
+                txtTel.setText(resultJ.getTelefone());
+                txtEmail.setText(resultJ.getEmail());
 
             } else {
                 JOptionPane.showMessageDialog(null,
@@ -1606,7 +1617,7 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Digite o nome do cliente!");
-            
+
         }
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
@@ -1614,8 +1625,7 @@ public class TelaInicial extends javax.swing.JFrame {
         CardLayout card = (CardLayout) mainPanel.getLayout();
         card.show(mainPanel, "painelCadastrarCliente");
         ID.setVisible(false);
-        inserir = false;
-        
+        inserirCliente = false;
 
 
     }//GEN-LAST:event_botaoAtualizarActionPerformed
@@ -1624,30 +1634,33 @@ public class TelaInicial extends javax.swing.JFrame {
     private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
         DaoClienteF daof = new DaoClienteF();
         DaoClienteJ daoj = new DaoClienteJ();
-        Cliente result = daof.procurar(txtConsultaCli.getText());
+        Cliente resultf = daof.procurar(labelNomeCli.getText());
+        Cliente resultj = daoj.procurar(labelNomeCli.getText());
 
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente Excluir o cliente?");
         if (resposta == JOptionPane.YES_OPTION) {
-            if (inserir) {
-                if (result != null) {
+                if (resultj != null){
+                    
+                    daoj.excluir(resultj.getId());
+                    
+                    txtConsultaCli.setText("");
+                    labelNomeCli.setText("");
+                } else if (resultf != null) {
+                    daof.excluir(resultf.getId());
+                    
+                    txtConsultaCli.setText("");
+                    labelNomeCli.setText("");
+                } else {
                     
                     JOptionPane.showMessageDialog(null,
-                            "Conta fechada com sucesso!",
-                            "Fechamento de conta",
+                            "Cliente excluido",
+                            "Exclusão de cliente",
                             JOptionPane.INFORMATION_MESSAGE);
-
+                    
                     CardLayout card = (CardLayout) mainPanel.getLayout();
                     card.show(mainPanel, "empty");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "Cliente esta vinculado a uma conta!",
-                        "Fechamento de conta",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-
         }
-
     }//GEN-LAST:event_botaoExcluirActionPerformed
 
     /**
