@@ -7,6 +7,7 @@ package projeto.poo.InterfaceGrafica;
 
 import java.awt.CardLayout;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.logging.Level;
@@ -16,11 +17,10 @@ import projeto.poo.model.cliente.Cliente;
 import projeto.poo.model.cliente.ClienteFisico;
 import projeto.poo.model.cliente.ClienteJuridico;
 import projeto.poo.model.contas.ContaCorrente;
-import projeto.poo.model.contas.ContaPoupança;
+import projeto.poo.model.contas.ContaPoupanca;
 import projeto.poo.model.contas.Contas;
 import projeto.poo.model.contas.ContaMessage;
 import projeto.poo.servico.cliente.Servico;
-import projeto.poo.servico.conta.ContaService;
 import projeto.poo.util.dao.cliente.DaoClienteF;
 import projeto.poo.util.dao.cliente.DaoClienteJ;
 import projeto.poo.util.dao.conta.DaoConta;
@@ -1016,12 +1016,29 @@ public class TelaInicial extends javax.swing.JFrame {
             Contas result = dao.procurar(txtPesquisa.getText());
             txtPesquisa.setText("");
             if (result != null) {
-
-                nomeContLb.setText(result.getNomeCont());
-                tipContLb.setText(result.getTipoConta());
-                numConta.setText(Integer.toString(result.getNumConta()));
-                saldo.setText(Float.toString(result.getSaldo()));
-                dadosConta.setVisible(true);
+                if ("Conta Corrente".equals(result.getTipoConta())) {
+                    ContaCorrente conta = new ContaCorrente(result.getCliente(), result.getNomeCont(),
+                            result.getNumConta(), result.getTipoConta(), result.getSaldo());
+                    conta.aplicartaxa();
+                    dao.atualizar(conta);
+                    nomeContLb.setText(conta.getNomeCont());
+                    tipContLb.setText(conta.getTipoConta());
+                    numConta.setText(Integer.toString(conta.getNumConta()));
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    saldo.setText(df.format(conta.getSaldo()));
+                    dadosConta.setVisible(true);
+                } else {
+                    ContaPoupanca conta = new ContaPoupanca(result.getCliente(), result.getNomeCont(),
+                            result.getNumConta(), result.getTipoConta(), result.getSaldo());
+                    conta.aplicarRendimento();
+                    dao.atualizar(conta);
+                    nomeContLb.setText(conta.getNomeCont());
+                    tipContLb.setText(conta.getTipoConta());
+                    numConta.setText(Integer.toString(conta.getNumConta()));
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    saldo.setText(df.format(conta.getSaldo()));
+                    dadosConta.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null,
                         "Nome ou número da conta inválido",
@@ -1105,7 +1122,8 @@ public class TelaInicial extends javax.swing.JFrame {
         float valor = 0;
         if (resultado != null) {
             try {
-                valor = Float.parseFloat(resultado);
+                DecimalFormat df = new DecimalFormat("0.00");
+                valor = Float.parseFloat(df.format(resultado));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Digite um valor numérico e válido!",
                         "Valor inválido", JOptionPane.ERROR_MESSAGE);
@@ -1118,7 +1136,8 @@ public class TelaInicial extends javax.swing.JFrame {
                             "Saque realizado",
                             "Saque em conta",
                             JOptionPane.INFORMATION_MESSAGE);
-                    saldo.setText(Float.toString(result.getSaldo()));
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    saldo.setText(df.format(result.getSaldo()));
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "Saque cancelado",
@@ -1189,7 +1208,8 @@ public class TelaInicial extends javax.swing.JFrame {
         float valor = 0;
         if (resultado != null) {
             try {
-                valor = Float.parseFloat(resultado);
+                DecimalFormat df = new DecimalFormat("0.00");
+                valor = Float.parseFloat(df.format(resultado));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Digite um valor numérico e válido!",
                         "Valor inválido", JOptionPane.ERROR_MESSAGE);
@@ -1202,7 +1222,9 @@ public class TelaInicial extends javax.swing.JFrame {
                             "Depósito realizado",
                             "Depósito em conta",
                             JOptionPane.INFORMATION_MESSAGE);
-                    saldo.setText(Float.toString(result.getSaldo()));
+
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    saldo.setText(df.format(result.getSaldo()));
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "Depósito cancelado",
@@ -1284,17 +1306,19 @@ public class TelaInicial extends javax.swing.JFrame {
 
                         CardLayout card = (CardLayout) mainPanel.getLayout();
                         card.show(mainPanel, "empty");
+                        limparConta();
 
                     } else {
                         String nome = NomeContxt.getText();
                         int num = Integer.parseInt(NumContxt.getText());
-                        ContaPoupança conta = new ContaPoupança(resultF, nome, num, tipo, 0);
+                        ContaPoupanca conta = new ContaPoupanca(resultF, nome, num, tipo, 0);
 
                         daoConta.inserir(conta);
                         ContaMessage.contAberta();
 
                         CardLayout card = (CardLayout) mainPanel.getLayout();
                         card.show(mainPanel, "empty");
+                        limparConta();
                     }
                 } else if (resultJ != null) {
                     if ("Conta Corrente".equals(tipo)) {
@@ -1307,16 +1331,18 @@ public class TelaInicial extends javax.swing.JFrame {
 
                         CardLayout card = (CardLayout) mainPanel.getLayout();
                         card.show(mainPanel, "empty");
+                        limparConta();
                     } else {
                         String nome = NomeContxt.getText();
                         int num = Integer.parseInt(NumContxt.getText());
-                        ContaPoupança conta = new ContaPoupança(resultJ, nome, num, tipo, 0);
+                        ContaPoupanca conta = new ContaPoupanca(resultJ, nome, num, tipo, 0);
 
                         daoConta.inserir(conta);
                         ContaMessage.contAberta();
 
                         CardLayout card = (CardLayout) mainPanel.getLayout();
                         card.show(mainPanel, "empty");
+                        limparConta();
                     }
                 }
             } else {
@@ -1530,7 +1556,7 @@ public class TelaInicial extends javax.swing.JFrame {
                     card.show(mainPanel, "empty");
 
                 } else if (labelCpfOUCnpj.getText().equalsIgnoreCase("CNPJ")) {
-                    
+
                     cliente = new ClienteJuridico(CPFouCNPJ, nome, tel, logradouro, numero, bairro, cidade, estado, tel, email);
                     cliente.setId(id);
                     DaoClienteJ daoj = new DaoClienteJ();
@@ -1639,27 +1665,27 @@ public class TelaInicial extends javax.swing.JFrame {
 
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente Excluir o cliente?");
         if (resposta == JOptionPane.YES_OPTION) {
-                if (resultj != null){
-                    
-                    daoj.excluir(resultj.getId());
-                    
-                    txtConsultaCli.setText("");
-                    labelNomeCli.setText("");
-                } else if (resultf != null) {
-                    daof.excluir(resultf.getId());
-                    
-                    txtConsultaCli.setText("");
-                    labelNomeCli.setText("");
-                } else {
-                    
-                    JOptionPane.showMessageDialog(null,
-                            "Cliente excluido",
-                            "Exclusão de cliente",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    
-                    CardLayout card = (CardLayout) mainPanel.getLayout();
-                    card.show(mainPanel, "empty");
-                }
+            if (resultj != null) {
+
+                daoj.excluir(resultj.getId());
+
+                txtConsultaCli.setText("");
+                labelNomeCli.setText("");
+            } else if (resultf != null) {
+                daof.excluir(resultf.getId());
+
+                txtConsultaCli.setText("");
+                labelNomeCli.setText("");
+            } else {
+
+                JOptionPane.showMessageDialog(null,
+                        "Cliente excluido",
+                        "Exclusão de cliente",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                CardLayout card = (CardLayout) mainPanel.getLayout();
+                card.show(mainPanel, "empty");
+            }
         }
     }//GEN-LAST:event_botaoExcluirActionPerformed
 
@@ -1725,7 +1751,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
                 } else {
                     int num = 0;
-                    ContaPoupança conta = daoConta.obter(NumContxt.getText(), num);
+                    ContaPoupanca conta = daoConta.obter(NumContxt.getText(), num);
                     conta.setNomeCont(NomeContxt.getText());
                     conta.setTipoConta(tipo);
                     daoConta.atualizar(conta);
@@ -1740,7 +1766,7 @@ public class TelaInicial extends javax.swing.JFrame {
                     ContaMessage.contAtualizada();
                 } else {
                     int num = 0;
-                    ContaPoupança conta = daoConta.obter(NumContxt.getText(), num);
+                    ContaPoupanca conta = daoConta.obter(NumContxt.getText(), num);
                     conta.setNomeCont(NomeContxt.getText());
                     conta.setTipoConta(tipo);
                     daoConta.atualizar(conta);
@@ -1752,6 +1778,15 @@ public class TelaInicial extends javax.swing.JFrame {
         }
         CardLayout card = (CardLayout) mainPanel.getLayout();
         card.show(mainPanel, "empty");
+    }
+    
+    public void limparConta(){
+        txtCliente.setText("");
+        nomCliLb.setText("");
+        NomeContxt.setText("");
+        NumContxt.setText("");
+        checkTermos.setSelected(false);
+        
     }
 
 

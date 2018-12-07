@@ -12,16 +12,16 @@ import projeto.poo.model.cliente.Cliente;
  * @author matheus.fboliveira
  * @author victor.gserafim
  */
-public class ContaPoupança extends Contas {
+public class ContaPoupanca extends Contas {
 
     private float rendimento;
 
-    public ContaPoupança(Cliente cliente, String nomeCont, int numConta, String tipoConta, float saldo) {
+    public ContaPoupanca(Cliente cliente, String nomeCont, int numConta, String tipoConta, float saldo) {
         super(cliente, nomeCont, numConta, tipoConta, saldo);
         this.rendimento = 0.005f;
     }
 
-    public ContaPoupança() {
+    public ContaPoupanca() {
     }
 
     public float getRendimento() {
@@ -32,7 +32,7 @@ public class ContaPoupança extends Contas {
         this.rendimento = rendimento;
     }
 
-    public void aplicarrendimento() {
+    public void aplicarRendimento() {
         this.setSaldo(getSaldo() + (getSaldo() * rendimento));
     }
 }

@@ -11,7 +11,7 @@ import projeto.poo.interfaces.Daos;
 import projeto.poo.model.cliente.ClienteFisico;
 import projeto.poo.model.cliente.ClienteJuridico;
 import projeto.poo.model.contas.ContaCorrente;
-import projeto.poo.model.contas.ContaPoupança;
+import projeto.poo.model.contas.ContaPoupanca;
 import projeto.poo.model.contas.Contas;
 import projeto.poo.util.bdconnection.ConnectionUtils;
 import projeto.poo.util.dao.cliente.DaoClienteF;
@@ -235,7 +235,7 @@ public class DaoConta implements Daos<Contas> {
         return null;
     }
 
-    public ContaPoupança obter(String valor, int id) {
+    public ContaPoupanca obter(String valor, int id) {
         String sql = "SELECT * FROM Conta WHERE (NUMCONTA=?)";
 
         Connection conn = null;
@@ -254,7 +254,7 @@ public class DaoConta implements Daos<Contas> {
             DaoClienteJ daoJ = new DaoClienteJ();
             DaoClienteF daoF = new DaoClienteF();
             if (result.next()) {
-                ContaPoupança conta = null;
+                ContaPoupanca conta = null;
                 ClienteJuridico clienteJ = daoJ.procurar(result.getInt("IDCLIENTEJ"));
                 ClienteFisico clienteF = daoF.procurar(result.getInt("IDCLIENTEF"));
                 if (clienteJ != null) {
@@ -262,13 +262,13 @@ public class DaoConta implements Daos<Contas> {
                     int num = result.getInt("NUMCONTA");
                     String tipo = result.getString("TIPOCONTA");
                     float saldo = result.getFloat("SALDO");
-                    conta = new ContaPoupança(clienteJ, nome, num, tipo, saldo);
+                    conta = new ContaPoupanca(clienteJ, nome, num, tipo, saldo);
                 } else {
                     String nome = result.getString("NOMECONT");
                     int num = result.getInt("NUMCONTA");
                     String tipo = result.getString("TIPOCONTA");
                     float saldo = result.getFloat("SALDO");
-                    conta = new ContaPoupança(clienteF, nome, num, tipo, saldo);
+                    conta = new ContaPoupanca(clienteF, nome, num, tipo, saldo);
                 }
                 return conta;
             }
