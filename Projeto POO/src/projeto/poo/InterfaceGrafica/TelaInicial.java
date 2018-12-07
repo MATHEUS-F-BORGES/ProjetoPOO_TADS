@@ -40,7 +40,7 @@ public class TelaInicial extends javax.swing.JFrame {
     Cliente cliente = null;
 
     public TelaInicial() {
-
+        
         initComponents();
         //Faz com que a janela seja aberta no meio da tela
         this.setLocationRelativeTo(null);
@@ -139,6 +139,8 @@ public class TelaInicial extends javax.swing.JFrame {
         MenuAbrirConta = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciamento de Contas");
+        setResizable(false);
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
