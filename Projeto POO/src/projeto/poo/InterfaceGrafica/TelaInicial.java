@@ -1124,8 +1124,7 @@ public class TelaInicial extends javax.swing.JFrame {
         float valor = 0;
         if (resultado != null) {
             try {
-                DecimalFormat df = new DecimalFormat("0.00");
-                valor = Float.parseFloat(df.format(resultado));
+                valor = Float.parseFloat(resultado);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Digite um valor numérico e válido!",
                         "Valor inválido", JOptionPane.ERROR_MESSAGE);
@@ -1210,8 +1209,7 @@ public class TelaInicial extends javax.swing.JFrame {
         float valor = 0;
         if (resultado != null) {
             try {
-                DecimalFormat df = new DecimalFormat("0.00");
-                valor = Float.parseFloat(df.format(resultado));
+                valor = Float.parseFloat(resultado);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Digite um valor numérico e válido!",
                         "Valor inválido", JOptionPane.ERROR_MESSAGE);
